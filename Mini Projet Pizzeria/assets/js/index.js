@@ -1,5 +1,6 @@
 
 import { Ingredient } from './classes/ingredient.js';
+import { Pizza } from './classes/pizza.js';
 
 let availableIngredients = [];
 
@@ -21,17 +22,17 @@ window.addEventListener("DOMContentLoaded", function(){
     
     availableIngredients.push(bacon, carots, cheese, egg, eggplant, goatCheese, honey, mushroom, olive, pepper, potato, tomato);
 
-    // Ciblage de l'element        
+    // Ciblage de l'element "stage"
     let stage = document.getElementById("stage");
     
-    // création de l'ul et positionnement dans le stage
+    // création de l'ul et positionnement dans le "stage"
     let ul = document.createElement("ul");
     stage.appendChild(ul)
 
 
     for (let i=0; i<availableIngredients.length; i++){
     
-    // création des elements
+    // création des balises à integrer
     let li = document.createElement("li");
     let article = document.createElement("article");
     let header = document.createElement("header");
@@ -56,19 +57,35 @@ window.addEventListener("DOMContentLoaded", function(){
 
     }
 
-    // selection d'un ingredient  
+    // selection d'un ingredient (coloration en rouge)
     let ingredientToSelect = document.querySelectorAll("#stage > ul > li > article");
     for (let i=0; i<ingredientToSelect.length; i++){
         ingredientToSelect[i].addEventListener("click", function(){
-            console.log(ingredientToSelect[i]);
+            // console.log(ingredientToSelect[i]);
             ingredientToSelect[i].classList.toggle("selected");
+        });
+    }
+
+
+
+    let pizza1 = new Pizza ();
+
+    for (let i=0; i<ingredientToSelect.length; i++){
+        ingredientToSelect[i].addEventListener("click", function(){
+            console.log(ingredientToSelect[i]);
+            if(ingredientToSelect.classList.contains("selected")){
+                pizza1.removeIngredient(availableIngredients[i]);
+                console.log(pizza1);
+            }
+            else{
+                pizza1.addIngredient(availableIngredients[i]);
+                console.log(pizza1);
+            }
         });
     }
     
     
-    
-    
-    
+
     
 });
 
