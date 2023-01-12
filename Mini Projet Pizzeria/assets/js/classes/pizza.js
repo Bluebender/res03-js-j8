@@ -15,15 +15,43 @@ class Pizza {
     }
     removeIngredient(ingredient){
         let tempTab = [];
-        for (i=0; this.#ingredients.length; i++){
-            if (ingredient !== this.#ingredients[i]){
-                newtab.push(this.#ingredients[i]);
+        for (let i = 0; i < this.#ingredients.length; i++){
+            if (ingredient.name !== this.#ingredients[i].name){
+                tempTab.push(this.#ingredients[i]);
             }
         }
         this.#ingredients = tempTab;
     }
     display(){
+        let order_button = document.querySelector("aside > ul > li:last-of-type");
+        let ul = document.querySelector("aside > ul");
+        ul.innerHTML="";
+        for (let i=0; i<this.#ingredients.length; i++){
+            console.log("coucou")
+            console.log(this.#ingredients[i])
+            // création des balises à integrer
+            let li = document.createElement("li");
+            let article = document.createElement("article");
+            let header = document.createElement("header");
+            let figure = document.createElement("figure");
+            let img = document.createElement("img");
+            let h3 = document.createElement("h3");
+            // Integration de l'image dans l'ul
+            img.setAttribute("src", this.#ingredients[i].file);
+            img.setAttribute("alt", this.#ingredients[i].name);
+            figure.appendChild(img);
+            header.appendChild(figure);
         
+            // Integration du text dans l'ul    
+            let textToAdd = document.createTextNode(this.#ingredients[i].name);
+            h3.appendChild(textToAdd);
+            header.appendChild(h3);
+            article.appendChild(header);
+            li.appendChild(article);
+            ul.appendChild(li);
+            ul.appendChild(order_button);
+
+        }
     }
 }
 

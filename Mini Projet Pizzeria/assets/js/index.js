@@ -32,54 +32,52 @@ window.addEventListener("DOMContentLoaded", function(){
 
     for (let i=0; i<availableIngredients.length; i++){
     
-    // création des balises à integrer
-    let li = document.createElement("li");
-    let article = document.createElement("article");
-    let header = document.createElement("header");
-    let figure = document.createElement("figure");
-    let img = document.createElement("img");
-    let h3 = document.createElement("h3");
+        // création des balises à integrer
+        let li = document.createElement("li");
+        let article = document.createElement("article");
+        let header = document.createElement("header");
+        let figure = document.createElement("figure");
+        let img = document.createElement("img");
+        let h3 = document.createElement("h3");
+        
+        // Integration de l'image dans l'ul
+        img.setAttribute("src", availableIngredients[i].file);
+        img.setAttribute("alt", availableIngredients[i].name);
+        figure.appendChild(img);
+        header.appendChild(figure);
     
-    // Integration de l'image dans l'ul
-    img.setAttribute("src", availableIngredients[i].file);
-    img.setAttribute("alt", availableIngredients[i].name);
-    figure.appendChild(img);
-    header.appendChild(figure);
-
-    // Integration du text dans l'ul    
-    let textToAdd = document.createTextNode(availableIngredients[i].name);
-    h3.appendChild(textToAdd);
-    header.appendChild(h3);
-    article.appendChild(header);
-    li.appendChild(article);
-    ul.appendChild(li);
-
-
+        // Integration du text dans l'ul    
+        let textToAdd = document.createTextNode(availableIngredients[i].name);
+        h3.appendChild(textToAdd);
+        header.appendChild(h3);
+        article.appendChild(header);
+        li.appendChild(article);
+        ul.appendChild(li);
     }
 
     // selection d'un ingredient (coloration en rouge)
     let ingredientToSelect = document.querySelectorAll("#stage > ul > li > article");
-    for (let i=0; i<ingredientToSelect.length; i++){
-        ingredientToSelect[i].addEventListener("click", function(){
-            // console.log(ingredientToSelect[i]);
-            ingredientToSelect[i].classList.toggle("selected");
-        });
-    }
-
-
-
-    let pizza1 = new Pizza ();
+    let newPizza = null;
 
     for (let i=0; i<ingredientToSelect.length; i++){
         ingredientToSelect[i].addEventListener("click", function(){
-            console.log(ingredientToSelect[i]);
-            if(ingredientToSelect.classList.contains("selected")){
-                pizza1.removeIngredient(availableIngredients[i]);
-                console.log(pizza1);
+            if(newPizza === null){
+                newPizza = new Pizza ();
+                newPizza.addIngredient(availableIngredients[i]);
+                ingredientToSelect[i].classList.add("selected");
+                newPizza.display();
             }
             else{
-                pizza1.addIngredient(availableIngredients[i]);
-                console.log(pizza1);
+                if (ingredientToSelect[i].classList.contains("selected")){
+                    newPizza.removeIngredient(availableIngredients[i]);
+                    ingredientToSelect[i].classList.remove("selected");
+                    newPizza.display();
+                }
+                else{
+                    newPizza.addIngredient(availableIngredients[i]);
+                    ingredientToSelect[i].classList.add("selected");
+                    newPizza.display();
+                }
             }
         });
     }
