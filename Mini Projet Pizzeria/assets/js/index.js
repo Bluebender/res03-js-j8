@@ -58,7 +58,8 @@ window.addEventListener("DOMContentLoaded", function(){
     // selection d'un ingredient (coloration en rouge)
     let ingredientToSelect = document.querySelectorAll("#stage > ul > li > article");
     let newPizza = null;
-
+    let cookingTime
+    
     for (let i=0; i<ingredientToSelect.length; i++){
         ingredientToSelect[i].addEventListener("click", function(){
             if(newPizza === null){
@@ -66,24 +67,49 @@ window.addEventListener("DOMContentLoaded", function(){
                 newPizza.addIngredient(availableIngredients[i]);
                 ingredientToSelect[i].classList.add("selected");
                 newPizza.display();
+                cookingTime = newPizza.ingredients.length;
+                // console.log(cookingTime)
             }
             else{
                 if (ingredientToSelect[i].classList.contains("selected")){
                     newPizza.removeIngredient(availableIngredients[i]);
                     ingredientToSelect[i].classList.remove("selected");
                     newPizza.display();
+                    cookingTime = newPizza.ingredients.length;
+                    // console.log(cookingTime)
                 }
                 else{
                     newPizza.addIngredient(availableIngredients[i]);
                     ingredientToSelect[i].classList.add("selected");
                     newPizza.display();
+                    cookingTime = newPizza.ingredients.length;
+                    // console.log(cookingTime)
                 }
             }
         });
     }
     
-    
+    // Lancement de la commande(On calcule le temps de cuisson, on retire les éléments de la liste aside et on enlève la coloration des ingrédients dans la liste des ingrédients.)
+    let order_button = document.getElementById("order");
+    let asideUl = document.querySelector("aside > ul");
+    order_button.addEventListener("click", function(){
+        console.log(cookingTime)
+        let orderButtonLi = document.querySelector("aside > ul > li:last-of-type");
+        asideUl.innerHTML="";
+        asideUl.appendChild(orderButtonLi);
+            for (let i=0; i<ingredientToSelect.length; i++){
+                ingredientToSelect[i].classList.remove("selected");
+                newPizza.removeIngredient(availableIngredients[i]);
+            }
+        let pizzaReady = document.getElementById("pizzaReady");
+        setTimeout(function(){
+            asideUl.classList.add("hidden");
+            pizzaReady.classList.remove("hidden");
+            
+        }, cookingTime*1000);
 
+    });
+        
     
 });
 

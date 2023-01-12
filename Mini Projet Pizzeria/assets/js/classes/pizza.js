@@ -23,12 +23,10 @@ class Pizza {
         this.#ingredients = tempTab;
     }
     display(){
-        let order_button = document.querySelector("aside > ul > li:last-of-type");
-        let ul = document.querySelector("aside > ul");
-        ul.innerHTML="";
+        let orderButtonLi = document.querySelector("aside > ul > li:last-of-type");
+        let asideUl = document.querySelector("aside > ul");
+        asideUl.innerHTML="";
         for (let i=0; i<this.#ingredients.length; i++){
-            console.log("coucou")
-            console.log(this.#ingredients[i])
             // création des balises à integrer
             let li = document.createElement("li");
             let article = document.createElement("article");
@@ -48,10 +46,9 @@ class Pizza {
             header.appendChild(h3);
             article.appendChild(header);
             li.appendChild(article);
-            ul.appendChild(li);
-            ul.appendChild(order_button);
-
+            asideUl.appendChild(li);
         }
+        asideUl.appendChild(orderButtonLi);
     }
 }
 

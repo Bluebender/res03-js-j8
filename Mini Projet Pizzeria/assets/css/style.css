@@ -189,4 +189,12 @@ body main {
   display: none;
 }
 
+aside > ul.hidden {
+  display: none;
+}
+
+aside > section.hidden {
+  display: none;
+}
+
 /*# sourceMappingURL=style.css.map */
